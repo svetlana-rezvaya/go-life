@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func Test_getHeight(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false},
+		[]bool{false, false, false},
+	}
+	height := getHeight(field)
+	if height != 2 {
+		test.Fail()
+	}
+}
+
 func Test_getCell_withTrue(test *testing.T) {
 	field := [][]bool{
 		[]bool{false, false, false},
