@@ -1,5 +1,9 @@
 package main
 
+func getWidth(field [][]bool) int {
+	return len(field[0])
+}
+
 func getHeight(field [][]bool) int {
 	return len(field)
 }

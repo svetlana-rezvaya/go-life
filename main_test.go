@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func Test_getWidth(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false},
+		[]bool{false, false, false},
+	}
+	width := getWidth(field)
+	if width != 3 {
+		test.Fail()
+	}
+}
+
 func Test_getHeight(test *testing.T) {
 	field := [][]bool{
 		[]bool{false, false, false},
