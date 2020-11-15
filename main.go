@@ -9,6 +9,8 @@ func getHeight(field [][]bool) int {
 }
 
 func getCell(field [][]bool, column int, row int) bool {
+	column = (column + getWidth(field)) % getWidth(field)
+	row = (row + getHeight(field)) % getHeight(field)
 	return field[row][column]
 }
 

@@ -51,6 +51,30 @@ func Test_getCell_withFalse(test *testing.T) {
 	}
 }
 
+func Test_getCell_withCoordinatesBeyondMinimum(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false},
+		[]bool{false, false, true /* ! */},
+		[]bool{false, false, false},
+	}
+	cell := getCell(field, -1, -2)
+	if cell != true {
+		test.Fail()
+	}
+}
+
+func Test_getCell_withCoordinatesBeyondMaximum(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false},
+		[]bool{true /* ! */, false, false},
+		[]bool{false, false, false},
+	}
+	cell := getCell(field, 3, 4)
+	if cell != true {
+		test.Fail()
+	}
+}
+
 func Test_setCell_withTrue(test *testing.T) {
 	field := [][]bool{
 		[]bool{false, false, false},
