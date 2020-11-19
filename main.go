@@ -35,3 +35,11 @@ func countNeighbors(field [][]bool, column int, row int) int {
 
 	return count
 }
+
+func getNextCell(field [][]bool, column int, row int) bool {
+	cell := getCell(field, column, row)
+	neighborCount := countNeighbors(field, column, row)
+	willBeBorn := !cell && neighborCount == 3
+	willSurvive := cell && (neighborCount == 2 || neighborCount == 3)
+	return willBeBorn || willSurvive
+}
