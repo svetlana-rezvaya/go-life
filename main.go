@@ -43,3 +43,18 @@ func getNextCell(field [][]bool, column int, row int) bool {
 	willSurvive := cell && (neighborCount == 2 || neighborCount == 3)
 	return willBeBorn || willSurvive
 }
+
+func getNextField(field [][]bool) [][]bool {
+	nextField := [][]bool{}
+	for row := 0; row < getHeight(field); row = row + 1 {
+		nextRow := []bool{}
+		for column := 0; column < getWidth(field); column = column + 1 {
+			nextCell := getNextCell(field, column, row)
+			nextRow = append(nextRow, nextCell)
+		}
+
+		nextField = append(nextField, nextRow)
+	}
+
+	return nextField
+}

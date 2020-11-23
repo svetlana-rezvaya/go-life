@@ -176,3 +176,25 @@ func Test_getNextCell_withDeath(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func Test_getNextField(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false, false, false},
+		[]bool{false, false, true, false, false},
+		[]bool{false, false, false, true, false},
+		[]bool{false, true, true, true, false},
+		[]bool{false, false, false, false, false},
+	}
+	nextField := getNextField(field)
+
+	wantedNextField := [][]bool{
+		[]bool{false, false, false, false, false},
+		[]bool{false, false, false, false, false},
+		[]bool{false, true, false, true, false},
+		[]bool{false, false, true, true, false},
+		[]bool{false, false, true, false, false},
+	}
+	if !reflect.DeepEqual(nextField, wantedNextField) {
+		test.Fail()
+	}
+}
