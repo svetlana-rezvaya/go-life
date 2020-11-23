@@ -198,3 +198,17 @@ func Test_getNextField(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func Test_marshalField(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, true, false},
+		[]bool{false, false, true},
+		[]bool{true, true, true},
+	}
+	result := marshalField(field)
+
+	wantedResult := ".O.\n..O\nOOO\n"
+	if result != wantedResult {
+		test.Fail()
+	}
+}

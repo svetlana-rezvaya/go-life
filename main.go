@@ -58,3 +58,21 @@ func getNextField(field [][]bool) [][]bool {
 
 	return nextField
 }
+
+func marshalField(field [][]bool) string {
+	result := ""
+	for row := 0; row < getHeight(field); row = row + 1 {
+		for column := 0; column < getWidth(field); column = column + 1 {
+			cell := getCell(field, column, row)
+			if cell {
+				result = result + "O"
+			} else {
+				result = result + "."
+			}
+		}
+
+		result = result + "\n"
+	}
+
+	return result
+}
