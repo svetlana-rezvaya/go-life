@@ -134,3 +134,45 @@ func Test_countNeighbors_withCellInCorner(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func Test_getNextCell_withBirth(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false, false, false},
+		[]bool{false, false, true, false, false},
+		[]bool{false, false /* ! */, false, true, false},
+		[]bool{false, true, true, true, false},
+		[]bool{false, false, false, false, false},
+	}
+	nextCell := getNextCell(field, 1, 2)
+	if nextCell != true {
+		test.Fail()
+	}
+}
+
+func Test_getNextCell_withSurvival(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false, false, false},
+		[]bool{false, false, true, false, false},
+		[]bool{false, false, false, true /* ! */, false},
+		[]bool{false, true, true, true, false},
+		[]bool{false, false, false, false, false},
+	}
+	nextCell := getNextCell(field, 3, 2)
+	if nextCell != true {
+		test.Fail()
+	}
+}
+
+func Test_getNextCell_withDeath(test *testing.T) {
+	field := [][]bool{
+		[]bool{false, false, false, false, false},
+		[]bool{false, false, true /* ! */, false, false},
+		[]bool{false, false, false, true, false},
+		[]bool{false, true, true, true, false},
+		[]bool{false, false, false, false, false},
+	}
+	nextCell := getNextCell(field, 2, 1)
+	if nextCell != false {
+		test.Fail()
+	}
+}
