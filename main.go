@@ -1,5 +1,11 @@
 package main
 
+import (
+	"errors"
+	"strconv"
+	"strings"
+)
+
 func getWidth(field [][]bool) int {
 	return len(field[0])
 }
@@ -57,6 +63,33 @@ func getNextField(field [][]bool) [][]bool {
 	}
 
 	return nextField
+}
+
+func unmarshalField(text string) ([][]bool, error) {
+	field := [][]bool{}
+	fieldWidth := 0
+	lines := strings.Split(text, "\n")
+	for lineIndex, line := range lines {
+		row := []bool{}
+		for _, character := range line {
+			if character != 'O' && character != '.' {
+				return nil, errors.New("unknown character " + strconv.QuoteRune(character))
+			}
+
+			cell := character == 'O'
+			row = append(row, cell)
+		}
+		if lineIndex == 0 {
+			fieldWidth = len(row)
+		} else if len(row) != fieldWidth {
+			return nil,
+				errors.New("inconsistent length of line " + strconv.Itoa(lineIndex+1))
+		}
+
+		field = append(field, row)
+	}
+
+	return field, nil
 }
 
 func marshalField(field [][]bool) string {

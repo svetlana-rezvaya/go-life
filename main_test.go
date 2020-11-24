@@ -199,6 +199,47 @@ func Test_getNextField(test *testing.T) {
 	}
 }
 
+func Test_unmarshalField_successful(test *testing.T) {
+	text := ".O.\n..O\nOOO"
+	field, err := unmarshalField(text)
+
+	wantedField := [][]bool{
+		[]bool{false, true, false},
+		[]bool{false, false, true},
+		[]bool{true, true, true},
+	}
+	if !reflect.DeepEqual(field, wantedField) {
+		test.Fail()
+	}
+	if err != nil {
+		test.Fail()
+	}
+}
+
+func Test_unmarshalField_withUnknownCharacter(test *testing.T) {
+	text := ".O.\n..*\nOOO"
+	field, err := unmarshalField(text)
+
+	if field != nil {
+		test.Fail()
+	}
+	if err == nil || err.Error() != "unknown character '*'" {
+		test.Fail()
+	}
+}
+
+func Test_unmarshalField_withInconsistentLength(test *testing.T) {
+	text := ".O.\n..\nOOO"
+	field, err := unmarshalField(text)
+
+	if field != nil {
+		test.Fail()
+	}
+	if err == nil || err.Error() != "inconsistent length of line 2" {
+		test.Fail()
+	}
+}
+
 func Test_marshalField(test *testing.T) {
 	field := [][]bool{
 		[]bool{false, true, false},
