@@ -67,9 +67,13 @@ func getNextField(field [][]bool) [][]bool {
 
 func unmarshalField(text string) ([][]bool, error) {
 	field := [][]bool{}
-	fieldWidth := 0
+	fieldWidth := -1
 	lines := strings.Split(text, "\n")
 	for lineIndex, line := range lines {
+		if line != "" && line[0] == '!' {
+			continue
+		}
+
 		row := []bool{}
 		for _, character := range line {
 			if character != 'O' && character != '.' {
@@ -79,7 +83,7 @@ func unmarshalField(text string) ([][]bool, error) {
 			cell := character == 'O'
 			row = append(row, cell)
 		}
-		if lineIndex == 0 {
+		if fieldWidth == -1 {
 			fieldWidth = len(row)
 		} else if len(row) != fieldWidth {
 			return nil,

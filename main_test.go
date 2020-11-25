@@ -216,6 +216,23 @@ func Test_unmarshalField_successful(test *testing.T) {
 	}
 }
 
+func Test_unmarshalField_withComments(test *testing.T) {
+	text := "!comment #1\n!comment #2\n.O.\n..O\nOOO"
+	field, err := unmarshalField(text)
+
+	wantedField := [][]bool{
+		[]bool{false, true, false},
+		[]bool{false, false, true},
+		[]bool{true, true, true},
+	}
+	if !reflect.DeepEqual(field, wantedField) {
+		test.Fail()
+	}
+	if err != nil {
+		test.Fail()
+	}
+}
+
 func Test_unmarshalField_withUnknownCharacter(test *testing.T) {
 	text := ".O.\n..*\nOOO"
 	field, err := unmarshalField(text)
