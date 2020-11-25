@@ -1,9 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func getWidth(field [][]bool) int {
@@ -112,4 +118,25 @@ func marshalField(field [][]bool) string {
 	}
 
 	return result
+}
+
+func main() {
+	fieldBytes, err := ioutil.ReadAll(os.Stdin)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fieldBytes = bytes.TrimSpace(fieldBytes)
+	field, err := unmarshalField(string(fieldBytes))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for {
+		text := marshalField(field)
+		fmt.Println(text)
+		time.Sleep(time.Second)
+
+		field = getNextField(field)
+	}
 }
