@@ -128,13 +128,13 @@ func main() {
 
 	fieldBytes, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("unable to read the field: ", err)
 	}
 
 	fieldBytes = bytes.TrimSpace(fieldBytes)
 	field, err := unmarshalField(string(fieldBytes))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("unable to unmarshal the field: ", err)
 	}
 
 	for {
