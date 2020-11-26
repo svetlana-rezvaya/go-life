@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"errors"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -121,6 +122,10 @@ func marshalField(field [][]bool) string {
 }
 
 func main() {
+	outDelay :=
+		flag.Duration("outDelay", 100*time.Millisecond, "delay between frames")
+	flag.Parse()
+
 	fieldBytes, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatal(err)
@@ -134,8 +139,8 @@ func main() {
 
 	for {
 		text := marshalField(field)
-		fmt.Println(text)
-		time.Sleep(time.Second)
+		fmt.Print(text)
+		time.Sleep(*outDelay)
 
 		field = getNextField(field)
 	}
