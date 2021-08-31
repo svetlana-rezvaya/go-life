@@ -6,7 +6,7 @@ import (
 )
 
 func Test_getWidth(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 	}
@@ -17,7 +17,7 @@ func Test_getWidth(test *testing.T) {
 }
 
 func Test_getHeight(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 	}
@@ -28,7 +28,7 @@ func Test_getHeight(test *testing.T) {
 }
 
 func Test_getCell_withTrue(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 		[]bool{false, true /* ! */, false},
@@ -40,7 +40,7 @@ func Test_getCell_withTrue(test *testing.T) {
 }
 
 func Test_getCell_withFalse(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false /* ! */, false, false},
 		[]bool{false, true, false},
@@ -52,7 +52,7 @@ func Test_getCell_withFalse(test *testing.T) {
 }
 
 func Test_getCell_withCoordinatesBeyondMinimum(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, true /* ! */},
 		[]bool{false, false, false},
@@ -64,7 +64,7 @@ func Test_getCell_withCoordinatesBeyondMinimum(test *testing.T) {
 }
 
 func Test_getCell_withCoordinatesBeyondMaximum(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{true /* ! */, false, false},
 		[]bool{false, false, false},
@@ -76,14 +76,14 @@ func Test_getCell_withCoordinatesBeyondMaximum(test *testing.T) {
 }
 
 func Test_setCell_withTrue(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{false /* ! */, false, false},
 		[]bool{false, false, false},
 	}
 	setCell(field, 0, 1, true)
 
-	wantedField := [][]bool{
+	wantedField := Field{
 		[]bool{false, false, false},
 		[]bool{true /* ! */, false, false},
 		[]bool{false, false, false},
@@ -94,14 +94,14 @@ func Test_setCell_withTrue(test *testing.T) {
 }
 
 func Test_setCell_withFalse(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false},
 		[]bool{true /* ! */, false, false},
 		[]bool{false, false, false},
 	}
 	setCell(field, 0, 1, false)
 
-	wantedField := [][]bool{
+	wantedField := Field{
 		[]bool{false, false, false},
 		[]bool{false /* ! */, false, false},
 		[]bool{false, false, false},
@@ -112,7 +112,7 @@ func Test_setCell_withFalse(test *testing.T) {
 }
 
 func Test_countNeighbors_withCellInMiddle(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
@@ -124,7 +124,7 @@ func Test_countNeighbors_withCellInMiddle(test *testing.T) {
 }
 
 func Test_countNeighbors_withCellInCorner(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
@@ -136,7 +136,7 @@ func Test_countNeighbors_withCellInCorner(test *testing.T) {
 }
 
 func Test_getNextCell_withBirth(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
 		[]bool{false, false /* ! */, false, true, false},
@@ -150,7 +150,7 @@ func Test_getNextCell_withBirth(test *testing.T) {
 }
 
 func Test_getNextCell_withSurvival(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
 		[]bool{false, false, false, true /* ! */, false},
@@ -164,7 +164,7 @@ func Test_getNextCell_withSurvival(test *testing.T) {
 }
 
 func Test_getNextCell_withDeath(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true /* ! */, false, false},
 		[]bool{false, false, false, true, false},
@@ -178,7 +178,7 @@ func Test_getNextCell_withDeath(test *testing.T) {
 }
 
 func Test_getNextField(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
 		[]bool{false, false, false, true, false},
@@ -187,7 +187,7 @@ func Test_getNextField(test *testing.T) {
 	}
 	nextField := getNextField(field)
 
-	wantedNextField := [][]bool{
+	wantedNextField := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, false, false, false},
 		[]bool{false, true, false, true, false},
@@ -203,7 +203,7 @@ func Test_unmarshalField_successful(test *testing.T) {
 	text := ".O.\n..O\nOOO"
 	field, err := unmarshalField(text)
 
-	wantedField := [][]bool{
+	wantedField := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
@@ -220,7 +220,7 @@ func Test_unmarshalField_withComments(test *testing.T) {
 	text := "!comment #1\n!comment #2\n.O.\n..O\nOOO"
 	field, err := unmarshalField(text)
 
-	wantedField := [][]bool{
+	wantedField := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
@@ -258,7 +258,7 @@ func Test_unmarshalField_withInconsistentLength(test *testing.T) {
 }
 
 func Test_marshalField(test *testing.T) {
-	field := [][]bool{
+	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},

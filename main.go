@@ -13,25 +13,28 @@ import (
 	"time"
 )
 
-func getWidth(field [][]bool) int {
+// Field ...
+type Field [][]bool
+
+func getWidth(field Field) int {
 	return len(field[0])
 }
 
-func getHeight(field [][]bool) int {
+func getHeight(field Field) int {
 	return len(field)
 }
 
-func getCell(field [][]bool, column int, row int) bool {
+func getCell(field Field, column int, row int) bool {
 	column = (column + getWidth(field)) % getWidth(field)
 	row = (row + getHeight(field)) % getHeight(field)
 	return field[row][column]
 }
 
-func setCell(field [][]bool, column int, row int, cell bool) {
+func setCell(field Field, column int, row int, cell bool) {
 	field[row][column] = cell
 }
 
-func countNeighbors(field [][]bool, column int, row int) int {
+func countNeighbors(field Field, column int, row int) int {
 	count := 0
 	for columnDelta := -1; columnDelta <= 1; columnDelta = columnDelta + 1 {
 		for rowDelta := -1; rowDelta <= 1; rowDelta = rowDelta + 1 {
@@ -49,7 +52,7 @@ func countNeighbors(field [][]bool, column int, row int) int {
 	return count
 }
 
-func getNextCell(field [][]bool, column int, row int) bool {
+func getNextCell(field Field, column int, row int) bool {
 	cell := getCell(field, column, row)
 	neighborCount := countNeighbors(field, column, row)
 	willBeBorn := !cell && neighborCount == 3
@@ -57,8 +60,8 @@ func getNextCell(field [][]bool, column int, row int) bool {
 	return willBeBorn || willSurvive
 }
 
-func getNextField(field [][]bool) [][]bool {
-	nextField := [][]bool{}
+func getNextField(field Field) Field {
+	nextField := Field{}
 	for row := 0; row < getHeight(field); row = row + 1 {
 		nextRow := []bool{}
 		for column := 0; column < getWidth(field); column = column + 1 {
@@ -72,8 +75,8 @@ func getNextField(field [][]bool) [][]bool {
 	return nextField
 }
 
-func unmarshalField(text string) ([][]bool, error) {
-	field := [][]bool{}
+func unmarshalField(text string) (Field, error) {
+	field := Field{}
 	fieldWidth := -1
 	lines := strings.Split(text, "\n")
 	for lineIndex, line := range lines {
@@ -103,7 +106,7 @@ func unmarshalField(text string) ([][]bool, error) {
 	return field, nil
 }
 
-func marshalField(field [][]bool) string {
+func marshalField(field Field) string {
 	result := ""
 	for row := 0; row < getHeight(field); row = row + 1 {
 		for column := 0; column < getWidth(field); column = column + 1 {
