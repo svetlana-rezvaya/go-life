@@ -57,7 +57,8 @@ func (field Field) NeighborCount(column int, row int) int {
 	return count
 }
 
-func getNextCell(field Field, column int, row int) bool {
+// NextCell ...
+func (field Field) NextCell(column int, row int) bool {
 	cell := field.Cell(column, row)
 	neighborCount := field.NeighborCount(column, row)
 	willBeBorn := !cell && neighborCount == 3
@@ -70,7 +71,7 @@ func getNextField(field Field) Field {
 	for row := 0; row < field.Height(); row = row + 1 {
 		nextRow := []bool{}
 		for column := 0; column < field.Width(); column = column + 1 {
-			nextCell := getNextCell(field, column, row)
+			nextCell := field.NextCell(column, row)
 			nextRow = append(nextRow, nextCell)
 		}
 

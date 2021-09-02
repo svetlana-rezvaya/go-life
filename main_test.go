@@ -135,7 +135,7 @@ func TestFieldNeighborCount_withCellInCorner(test *testing.T) {
 	}
 }
 
-func Test_getNextCell_withBirth(test *testing.T) {
+func TestFieldNextCell_withBirth(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
@@ -143,13 +143,13 @@ func Test_getNextCell_withBirth(test *testing.T) {
 		[]bool{false, true, true, true, false},
 		[]bool{false, false, false, false, false},
 	}
-	nextCell := getNextCell(field, 1, 2)
+	nextCell := field.NextCell(1, 2)
 	if nextCell != true {
 		test.Fail()
 	}
 }
 
-func Test_getNextCell_withSurvival(test *testing.T) {
+func TestFieldNextCell_withSurvival(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
@@ -157,13 +157,13 @@ func Test_getNextCell_withSurvival(test *testing.T) {
 		[]bool{false, true, true, true, false},
 		[]bool{false, false, false, false, false},
 	}
-	nextCell := getNextCell(field, 3, 2)
+	nextCell := field.NextCell(3, 2)
 	if nextCell != true {
 		test.Fail()
 	}
 }
 
-func Test_getNextCell_withDeath(test *testing.T) {
+func TestFieldNextCell_withDeath(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true /* ! */, false, false},
@@ -171,7 +171,7 @@ func Test_getNextCell_withDeath(test *testing.T) {
 		[]bool{false, true, true, true, false},
 		[]bool{false, false, false, false, false},
 	}
-	nextCell := getNextCell(field, 2, 1)
+	nextCell := field.NextCell(2, 1)
 	if nextCell != false {
 		test.Fail()
 	}
