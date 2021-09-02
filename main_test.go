@@ -27,49 +27,49 @@ func TestFieldHeight(test *testing.T) {
 	}
 }
 
-func Test_getCell_withTrue(test *testing.T) {
+func TestFieldCell_withTrue(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 		[]bool{false, true /* ! */, false},
 	}
-	cell := getCell(field, 1, 2)
+	cell := field.Cell(1, 2)
 	if cell != true {
 		test.Fail()
 	}
 }
 
-func Test_getCell_withFalse(test *testing.T) {
+func TestFieldCell_withFalse(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false /* ! */, false, false},
 		[]bool{false, true, false},
 	}
-	cell := getCell(field, 0, 1)
+	cell := field.Cell(0, 1)
 	if cell != false {
 		test.Fail()
 	}
 }
 
-func Test_getCell_withCoordinatesBeyondMinimum(test *testing.T) {
+func TestFieldCell_withCoordinatesBeyondMinimum(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, true /* ! */},
 		[]bool{false, false, false},
 	}
-	cell := getCell(field, -1, -2)
+	cell := field.Cell(-1, -2)
 	if cell != true {
 		test.Fail()
 	}
 }
 
-func Test_getCell_withCoordinatesBeyondMaximum(test *testing.T) {
+func TestFieldCell_withCoordinatesBeyondMaximum(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{true /* ! */, false, false},
 		[]bool{false, false, false},
 	}
-	cell := getCell(field, 3, 4)
+	cell := field.Cell(3, 4)
 	if cell != true {
 		test.Fail()
 	}

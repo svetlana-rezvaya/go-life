@@ -26,7 +26,8 @@ func (field Field) Height() int {
 	return len(field)
 }
 
-func getCell(field Field, column int, row int) bool {
+// Cell ...
+func (field Field) Cell(column int, row int) bool {
 	column = (column + field.Width()) % field.Width()
 	row = (row + field.Height()) % field.Height()
 	return field[row][column]
@@ -44,7 +45,7 @@ func countNeighbors(field Field, column int, row int) int {
 				continue
 			}
 
-			cell := getCell(field, column+columnDelta, row+rowDelta)
+			cell := field.Cell(column+columnDelta, row+rowDelta)
 			if cell {
 				count = count + 1
 			}
@@ -55,7 +56,7 @@ func countNeighbors(field Field, column int, row int) int {
 }
 
 func getNextCell(field Field, column int, row int) bool {
-	cell := getCell(field, column, row)
+	cell := field.Cell(column, row)
 	neighborCount := countNeighbors(field, column, row)
 	willBeBorn := !cell && neighborCount == 3
 	willSurvive := cell && (neighborCount == 2 || neighborCount == 3)
@@ -112,7 +113,7 @@ func marshalField(field Field) string {
 	result := ""
 	for row := 0; row < field.Height(); row = row + 1 {
 		for column := 0; column < field.Width(); column = column + 1 {
-			cell := getCell(field, column, row)
+			cell := field.Cell(column, row)
 			if cell {
 				result = result + "O"
 			} else {
