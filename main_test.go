@@ -111,25 +111,25 @@ func TestFieldSetCell_withFalse(test *testing.T) {
 	}
 }
 
-func Test_countNeighbors_withCellInMiddle(test *testing.T) {
+func TestFieldNeighborCount_withCellInMiddle(test *testing.T) {
 	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
 	}
-	count := countNeighbors(field, 1, 1)
+	count := field.NeighborCount(1, 1)
 	if count != 5 {
 		test.Fail()
 	}
 }
 
-func Test_countNeighbors_withCellInCorner(test *testing.T) {
+func TestFieldNeighborCount_withCellInCorner(test *testing.T) {
 	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
 	}
-	count := countNeighbors(field, 0, 0)
+	count := field.NeighborCount(0, 0)
 	if count != 5 {
 		test.Fail()
 	}

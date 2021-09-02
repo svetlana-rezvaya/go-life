@@ -38,7 +38,8 @@ func (field Field) SetCell(column int, row int, cell bool) {
 	field[row][column] = cell
 }
 
-func countNeighbors(field Field, column int, row int) int {
+// NeighborCount ...
+func (field Field) NeighborCount(column int, row int) int {
 	count := 0
 	for columnDelta := -1; columnDelta <= 1; columnDelta = columnDelta + 1 {
 		for rowDelta := -1; rowDelta <= 1; rowDelta = rowDelta + 1 {
@@ -58,7 +59,7 @@ func countNeighbors(field Field, column int, row int) int {
 
 func getNextCell(field Field, column int, row int) bool {
 	cell := field.Cell(column, row)
-	neighborCount := countNeighbors(field, column, row)
+	neighborCount := field.NeighborCount(column, row)
 	willBeBorn := !cell && neighborCount == 3
 	willSurvive := cell && (neighborCount == 2 || neighborCount == 3)
 	return willBeBorn || willSurvive
