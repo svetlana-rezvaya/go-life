@@ -21,13 +21,14 @@ func (field Field) Width() int {
 	return len(field[0])
 }
 
-func getHeight(field Field) int {
+// Height ...
+func (field Field) Height() int {
 	return len(field)
 }
 
 func getCell(field Field, column int, row int) bool {
 	column = (column + field.Width()) % field.Width()
-	row = (row + getHeight(field)) % getHeight(field)
+	row = (row + field.Height()) % field.Height()
 	return field[row][column]
 }
 
@@ -63,7 +64,7 @@ func getNextCell(field Field, column int, row int) bool {
 
 func getNextField(field Field) Field {
 	nextField := Field{}
-	for row := 0; row < getHeight(field); row = row + 1 {
+	for row := 0; row < field.Height(); row = row + 1 {
 		nextRow := []bool{}
 		for column := 0; column < field.Width(); column = column + 1 {
 			nextCell := getNextCell(field, column, row)
@@ -109,7 +110,7 @@ func unmarshalField(text string) (Field, error) {
 
 func marshalField(field Field) string {
 	result := ""
-	for row := 0; row < getHeight(field); row = row + 1 {
+	for row := 0; row < field.Height(); row = row + 1 {
 		for column := 0; column < field.Width(); column = column + 1 {
 			cell := getCell(field, column, row)
 			if cell {

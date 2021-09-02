@@ -16,12 +16,12 @@ func TestFieldWidth(test *testing.T) {
 	}
 }
 
-func Test_getHeight(test *testing.T) {
+func TestFieldHeight(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 	}
-	height := getHeight(field)
+	height := field.Height()
 	if height != 2 {
 		test.Fail()
 	}
