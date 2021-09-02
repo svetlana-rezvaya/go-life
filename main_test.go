@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func Test_getWidth(test *testing.T) {
+func TestFieldWidth(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false, false, false},
 	}
-	width := getWidth(field)
+	width := field.Width()
 	if width != 3 {
 		test.Fail()
 	}
