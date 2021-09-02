@@ -75,13 +75,13 @@ func TestFieldCell_withCoordinatesBeyondMaximum(test *testing.T) {
 	}
 }
 
-func Test_setCell_withTrue(test *testing.T) {
+func TestFieldSetCell_withTrue(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{false /* ! */, false, false},
 		[]bool{false, false, false},
 	}
-	setCell(field, 0, 1, true)
+	field.SetCell(0, 1, true)
 
 	wantedField := Field{
 		[]bool{false, false, false},
@@ -93,13 +93,13 @@ func Test_setCell_withTrue(test *testing.T) {
 	}
 }
 
-func Test_setCell_withFalse(test *testing.T) {
+func TestFieldSetCell_withFalse(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
 		[]bool{true /* ! */, false, false},
 		[]bool{false, false, false},
 	}
-	setCell(field, 0, 1, false)
+	field.SetCell(0, 1, false)
 
 	wantedField := Field{
 		[]bool{false, false, false},

@@ -33,7 +33,8 @@ func (field Field) Cell(column int, row int) bool {
 	return field[row][column]
 }
 
-func setCell(field Field, column int, row int, cell bool) {
+// SetCell ...
+func (field Field) SetCell(column int, row int, cell bool) {
 	field[row][column] = cell
 }
 
