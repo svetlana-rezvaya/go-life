@@ -177,7 +177,7 @@ func TestFieldNextCell_withDeath(test *testing.T) {
 	}
 }
 
-func Test_getNextField(test *testing.T) {
+func TestFieldNextField(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false, false, false},
 		[]bool{false, false, true, false, false},
@@ -185,7 +185,7 @@ func Test_getNextField(test *testing.T) {
 		[]bool{false, true, true, true, false},
 		[]bool{false, false, false, false, false},
 	}
-	nextField := getNextField(field)
+	nextField := field.NextField()
 
 	wantedNextField := Field{
 		[]bool{false, false, false, false, false},

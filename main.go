@@ -66,7 +66,8 @@ func (field Field) NextCell(column int, row int) bool {
 	return willBeBorn || willSurvive
 }
 
-func getNextField(field Field) Field {
+// NextField ...
+func (field Field) NextField() Field {
 	nextField := Field{}
 	for row := 0; row < field.Height(); row = row + 1 {
 		nextRow := []bool{}
@@ -151,6 +152,6 @@ func main() {
 		fmt.Print(text)
 		time.Sleep(*outDelay)
 
-		field = getNextField(field)
+		field = field.NextField()
 	}
 }
