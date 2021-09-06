@@ -257,13 +257,13 @@ func Test_unmarshalField_withInconsistentLength(test *testing.T) {
 	}
 }
 
-func Test_marshalField(test *testing.T) {
+func TestFieldString(test *testing.T) {
 	field := Field{
 		[]bool{false, true, false},
 		[]bool{false, false, true},
 		[]bool{true, true, true},
 	}
-	result := marshalField(field)
+	result := field.String()
 
 	wantedResult := ".O.\n..O\nOOO\n"
 	if result != wantedResult {

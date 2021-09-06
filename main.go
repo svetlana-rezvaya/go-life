@@ -113,7 +113,8 @@ func unmarshalField(text string) (Field, error) {
 	return field, nil
 }
 
-func marshalField(field Field) string {
+// String ...
+func (field Field) String() string {
 	result := ""
 	for row := 0; row < field.Height(); row = row + 1 {
 		for column := 0; column < field.Width(); column = column + 1 {
@@ -148,8 +149,7 @@ func main() {
 	}
 
 	for {
-		text := marshalField(field)
-		fmt.Print(text)
+		fmt.Print(field)
 		time.Sleep(*outDelay)
 
 		field = field.NextField()
