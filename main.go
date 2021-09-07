@@ -14,6 +14,37 @@ import (
 // Field ...
 type Field [][]bool
 
+// ParseField ...
+func ParseField(text string) (Field, error) {
+	field := Field{}
+	fieldWidth := -1
+	lines := strings.Split(text, "\n")
+	for lineIndex, line := range lines {
+		if line != "" && line[0] == '!' {
+			continue
+		}
+
+		row := []bool{}
+		for _, character := range line {
+			if character != 'O' && character != '.' {
+				return nil, fmt.Errorf("unknown character %q", character)
+			}
+
+			cell := character == 'O'
+			row = append(row, cell)
+		}
+		if fieldWidth == -1 {
+			fieldWidth = len(row)
+		} else if len(row) != fieldWidth {
+			return nil, fmt.Errorf("inconsistent length of line %d", lineIndex+1)
+		}
+
+		field = append(field, row)
+	}
+
+	return field, nil
+}
+
 // Width ...
 func (field Field) Width() int {
 	return len(field[0])
@@ -80,36 +111,6 @@ func (field Field) NextField() Field {
 	return nextField
 }
 
-func unmarshalField(text string) (Field, error) {
-	field := Field{}
-	fieldWidth := -1
-	lines := strings.Split(text, "\n")
-	for lineIndex, line := range lines {
-		if line != "" && line[0] == '!' {
-			continue
-		}
-
-		row := []bool{}
-		for _, character := range line {
-			if character != 'O' && character != '.' {
-				return nil, fmt.Errorf("unknown character %q", character)
-			}
-
-			cell := character == 'O'
-			row = append(row, cell)
-		}
-		if fieldWidth == -1 {
-			fieldWidth = len(row)
-		} else if len(row) != fieldWidth {
-			return nil, fmt.Errorf("inconsistent length of line %d", lineIndex+1)
-		}
-
-		field = append(field, row)
-	}
-
-	return field, nil
-}
-
 // String ...
 func (field Field) String() string {
 	result := ""
@@ -138,9 +139,9 @@ func main() {
 	if err != nil {
 		log.Fatal("unable to read the field: ", err)
 	}
-
 	fieldBytes = bytes.TrimSpace(fieldBytes)
-	field, err := unmarshalField(string(fieldBytes))
+
+	field, err := ParseField(string(fieldBytes))
 	if err != nil {
 		log.Fatal("unable to unmarshal the field: ", err)
 	}

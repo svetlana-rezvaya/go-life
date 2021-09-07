@@ -5,6 +5,64 @@ import (
 	"testing"
 )
 
+func TestParseField_successful(test *testing.T) {
+	text := ".O.\n..O\nOOO"
+	field, err := ParseField(text)
+
+	wantedField := Field{
+		[]bool{false, true, false},
+		[]bool{false, false, true},
+		[]bool{true, true, true},
+	}
+	if !reflect.DeepEqual(field, wantedField) {
+		test.Fail()
+	}
+	if err != nil {
+		test.Fail()
+	}
+}
+
+func TestParseField_withComments(test *testing.T) {
+	text := "!comment #1\n!comment #2\n.O.\n..O\nOOO"
+	field, err := ParseField(text)
+
+	wantedField := Field{
+		[]bool{false, true, false},
+		[]bool{false, false, true},
+		[]bool{true, true, true},
+	}
+	if !reflect.DeepEqual(field, wantedField) {
+		test.Fail()
+	}
+	if err != nil {
+		test.Fail()
+	}
+}
+
+func TestParseField_withUnknownCharacter(test *testing.T) {
+	text := ".O.\n..*\nOOO"
+	field, err := ParseField(text)
+
+	if field != nil {
+		test.Fail()
+	}
+	if err == nil || err.Error() != "unknown character '*'" {
+		test.Fail()
+	}
+}
+
+func TestParseField_withInconsistentLength(test *testing.T) {
+	text := ".O.\n..\nOOO"
+	field, err := ParseField(text)
+
+	if field != nil {
+		test.Fail()
+	}
+	if err == nil || err.Error() != "inconsistent length of line 2" {
+		test.Fail()
+	}
+}
+
 func TestFieldWidth(test *testing.T) {
 	field := Field{
 		[]bool{false, false, false},
@@ -195,64 +253,6 @@ func TestFieldNextField(test *testing.T) {
 		[]bool{false, false, true, false, false},
 	}
 	if !reflect.DeepEqual(nextField, wantedNextField) {
-		test.Fail()
-	}
-}
-
-func Test_unmarshalField_successful(test *testing.T) {
-	text := ".O.\n..O\nOOO"
-	field, err := unmarshalField(text)
-
-	wantedField := Field{
-		[]bool{false, true, false},
-		[]bool{false, false, true},
-		[]bool{true, true, true},
-	}
-	if !reflect.DeepEqual(field, wantedField) {
-		test.Fail()
-	}
-	if err != nil {
-		test.Fail()
-	}
-}
-
-func Test_unmarshalField_withComments(test *testing.T) {
-	text := "!comment #1\n!comment #2\n.O.\n..O\nOOO"
-	field, err := unmarshalField(text)
-
-	wantedField := Field{
-		[]bool{false, true, false},
-		[]bool{false, false, true},
-		[]bool{true, true, true},
-	}
-	if !reflect.DeepEqual(field, wantedField) {
-		test.Fail()
-	}
-	if err != nil {
-		test.Fail()
-	}
-}
-
-func Test_unmarshalField_withUnknownCharacter(test *testing.T) {
-	text := ".O.\n..*\nOOO"
-	field, err := unmarshalField(text)
-
-	if field != nil {
-		test.Fail()
-	}
-	if err == nil || err.Error() != "unknown character '*'" {
-		test.Fail()
-	}
-}
-
-func Test_unmarshalField_withInconsistentLength(test *testing.T) {
-	text := ".O.\n..\nOOO"
-	field, err := unmarshalField(text)
-
-	if field != nil {
-		test.Fail()
-	}
-	if err == nil || err.Error() != "inconsistent length of line 2" {
 		test.Fail()
 	}
 }
