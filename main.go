@@ -107,15 +107,12 @@ func (field Field) NextCell(column int, row int) bool {
 
 // NextField ...
 func (field Field) NextField() Field {
-	nextField := Field{}
+	nextField := NewField(field.Width(), field.Height())
 	for row := 0; row < field.Height(); row = row + 1 {
-		nextRow := []bool{}
 		for column := 0; column < field.Width(); column = column + 1 {
 			nextCell := field.NextCell(column, row)
-			nextRow = append(nextRow, nextCell)
+			nextField.SetCell(column, row, nextCell)
 		}
-
-		nextField = append(nextField, nextRow)
 	}
 
 	return nextField
