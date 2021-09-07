@@ -2,13 +2,11 @@ package main
 
 import (
 	"bytes"
-	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -94,7 +92,7 @@ func unmarshalField(text string) (Field, error) {
 		row := []bool{}
 		for _, character := range line {
 			if character != 'O' && character != '.' {
-				return nil, errors.New("unknown character " + strconv.QuoteRune(character))
+				return nil, fmt.Errorf("unknown character %q", character)
 			}
 
 			cell := character == 'O'
@@ -103,8 +101,7 @@ func unmarshalField(text string) (Field, error) {
 		if fieldWidth == -1 {
 			fieldWidth = len(row)
 		} else if len(row) != fieldWidth {
-			return nil,
-				errors.New("inconsistent length of line " + strconv.Itoa(lineIndex+1))
+			return nil, fmt.Errorf("inconsistent length of line %d", lineIndex+1)
 		}
 
 		field = append(field, row)
