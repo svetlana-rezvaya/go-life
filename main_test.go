@@ -5,6 +5,19 @@ import (
 	"testing"
 )
 
+func TestNewField(test *testing.T) {
+	field := NewField(2, 3)
+
+	wantedField := Field{
+		[]bool{false, false},
+		[]bool{false, false},
+		[]bool{false, false},
+	}
+	if !reflect.DeepEqual(field, wantedField) {
+		test.Fail()
+	}
+}
+
 func TestParseField_successful(test *testing.T) {
 	text := ".O.\n..O\nOOO"
 	field, err := ParseField(text)

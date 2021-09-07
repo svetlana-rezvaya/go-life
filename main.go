@@ -14,6 +14,16 @@ import (
 // Field ...
 type Field [][]bool
 
+// NewField ...
+func NewField(width int, height int) Field {
+	field := make(Field, height)
+	for rowIndex := range field {
+		field[rowIndex] = make([]bool, width)
+	}
+
+	return field
+}
+
 // ParseField ...
 func ParseField(text string) (Field, error) {
 	field := Field{}
