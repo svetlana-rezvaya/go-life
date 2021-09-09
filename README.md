@@ -10,7 +10,7 @@
 ## Installation
 
 ```
-$ go get github.com/svetlana-rezvaya/go-life
+$ go get github.com/svetlana-rezvaya/go-life/...
 ```
 
 ## Usage
