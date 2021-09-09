@@ -1,6 +1,9 @@
 # go-life
 
+[![GoDoc](https://godoc.org/github.com/svetlana-rezvaya/go-life?status.svg)](https://godoc.org/github.com/svetlana-rezvaya/go-life)
 [![Go Report Card](https://goreportcard.com/badge/github.com/svetlana-rezvaya/go-life)](https://goreportcard.com/report/github.com/svetlana-rezvaya/go-life)
+[![Build Status](https://app.travis-ci.com/svetlana-rezvaya/go-life.svg?branch=master)](https://app.travis-ci.com/svetlana-rezvaya/go-life)
+[![codecov](https://codecov.io/gh/svetlana-rezvaya/go-life/branch/master/graph/badge.svg)](https://codecov.io/gh/svetlana-rezvaya/go-life)
 
 [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life).
 
